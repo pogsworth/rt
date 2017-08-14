@@ -41,6 +41,7 @@ public:
 		//calculate the normal
 		sc.norm = sc.pos - ctr;
 		sc.norm *= 1.f/fRadius;
+		sc.geonorm = sc.norm;
 		sc.u = (float)(atan2f(sc.geonorm.x,sc.geonorm.z)/M_PI+1.f)*.5f;
 		sc.v= (float)(acosf(sc.geonorm.y)/M_PI+1.f)*.5f;
 		sc.s=sc.u;

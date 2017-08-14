@@ -18,18 +18,25 @@ public:
 	RGBAf Shade(ShaderContext &sc)
 	{
 		RGBAf c;
+		RGBAf cs;
 		float smod = mod(s*frequency,1);
 		float tmod = mod(t*frequency,1);
 
-		if ( (smod < .5f) ^ (tmod < .5f))
-			c=DarkChecker;
+		if ((smod < .5f) ^ (tmod < .5f))
+		{
+			c = DarkChecker;
+			cs = DarkChecker;
+		}
 		else
-			c=coeffs.Diffuse;
+		{
+			c = coeffs.Diffuse;
+			cs = coeffs.Specular;
+		}
 
 		RGBAf result;
 		Vec3 norm=faceforward(N,I);
 		result = c * (coeffs.Ambient * ambient() + coeffs.Diffuse * diffuse(norm));
-		result += coeffs.Specular * specular(norm, -I, 1.f/coeffs.Power);
+		result += cs * specular(norm, -I, 1.f/coeffs.Power);
 		return result;
 	}
 };

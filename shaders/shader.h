@@ -46,7 +46,13 @@ public:
 			//check for shadow...
 			if (!pRayTracer->IsShadowed(pos, l)) {
 				//calculate diffuse factor
-				float shade= Norm % l.Direction;
+				Vec3 light_dir = l.Direction;
+				if (l.Type == LIGHT_POINT)
+				{
+					light_dir = l.Position - pos;
+					light_dir.Norm();
+				}
+				float shade= Norm % light_dir;
 				if (shade < 0)
 					shade=0;
 				else 
@@ -65,8 +71,14 @@ public:
 		for (i=0; i<n; i++) {
 			LIGHT &l=*pRayTracer->GetScene()->GetLight(i);
 			if (!pRayTracer->IsShadowed(pos, l)) {
+				Vec3 light_dir = l.Direction;
 				//calculate specular factor
-				Vec3 Half=V+l.Direction;
+				if (l.Type == LIGHT_POINT)
+				{
+					light_dir = l.Position - pos;
+					light_dir.Norm();
+				}
+				Vec3 Half=V+light_dir;
 				Half.Norm();
 				float spec= Half % Norm;
 				if (spec < 0)

@@ -28,9 +28,10 @@ void main()
 	//make matrix and camera for viewing
 	Matrix4 view,rotate;
 	rotate.RotateY(-(float)M_PI/4.f);
-	rotate.RotateX(-(float)M_PI/4.f);
-	view.Translate(.5,0,-5);
-	Camera camera(view, DTOR*45.f);
+	rotate.RotateX(-(float)M_PI / 4.f);
+	view.RotateX(-(float)M_PI / 4.f);
+	view.Translate(.5,5,-5);
+	Camera camera(view, DTOR*30.f);
 
 	//create the scene
 	Scene scene;
@@ -48,7 +49,8 @@ void main()
 	mat.Specular = .3f*cWhite;
 	mat.Power = 32;
 	float x=0,y=0,z=0,r=1;
-	scene.AddObject(new Sphere(Vec3(1.5,0,0),1,new Oak(mat)));
+//	scene.AddObject(new Sphere(Vec3(1.5, 0, 0), 1, new Oak(mat)));
+	scene.AddObject(new Sphere(Vec3(1.5, 0, 0), 1, new CheckerBoard(mat, cRed)));
 	mat.Ambient=.2f*cWhite;
 	mat.Diffuse=.5f*cRed;
 //	scene.AddObject(new Sphere(Vec3(x,y,z), .5f, new Plastic(mat)));
@@ -58,11 +60,12 @@ void main()
 //	scene.AddObject(Icosa(Vec3(7,1,3),p));
 //	scene.AddObject(Dodeca(Vec3(2,1,7),p));
 
-	mat.Ambient=.4f*cWhite;
+	mat.Ambient=.2f*cWhite;
 	mat.Diffuse=.5f*cWhite;
-	mat.Specular = .8f*cSlightYellow;
-	scene.AddObject(Cube(.5,.5,.5, new CheckerBoard(mat, cRed, 2)));
-//	scene.AddObject(new Sphere(Vec3(0,1,1.5), 1.5f, new Mirror(mat)));
+	mat.Specular = .3f*cWhite;
+//	scene.AddObject(Cube(.5, .5, .5, new CheckerBoard(mat, cRed, 2)));
+	scene.AddObject(Cube(.5, .5, .5, new Oak(mat)));
+	//	scene.AddObject(new Sphere(Vec3(0,1,1.5), 1.5f, new Mirror(mat)));
 
 	//add a white light  to the scene
 	LIGHT Light;
@@ -72,6 +75,8 @@ void main()
 	Light.Diffuse=cWhite;
 	Light.Specular=1.5f*cWhite;
 	scene.AddLight(Light);
+	Light.Type = LIGHT_POINT;
+	Light.Position = Vec3(0, 1, 1);
 	Light.Direction=Vec3(-.707f,0.f,.707f);
 	scene.AddLight(Light);
 

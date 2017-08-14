@@ -55,7 +55,7 @@ bool RayTracer::IsShadowed(const Vec3 &pos, LIGHT &l)
 		tmax=r.dir.Norm();
 		tmax-=fShadowEpsilon;
 	}
-	r.pos=pos+fShadowEpsilon*r.dir;
+	r.pos+=fShadowEpsilon*r.dir;
 
 	for (i=0; i<pScene->GetNumObjects(); i++) {
 		Surface *pObject=pScene->GetObject(i);
